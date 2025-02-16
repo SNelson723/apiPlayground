@@ -101,6 +101,7 @@ const Sample1 = () => {
             </ul>
           ) : null}
         </div>
+          {/* Maybe a grid? */}
       </div>
     </div>
   );
