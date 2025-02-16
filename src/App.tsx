@@ -1,13 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-interface ClassInfo {
-  index: string;
-  name: string;
-  url: string;
-}
-
-interface Proficiencies {
+interface Info {
   index: string;
   name: string;
   url: string;
@@ -15,14 +9,15 @@ interface Proficiencies {
 
 interface ClassDetails {
   hit_die: number;
-  proficiencies: Proficiencies[];
+  proficiencies: Info[];
   // and any other fields I want to use
 }
 
 const App = () => {
-  const [data, setData] = useState<ClassInfo[]>([]);
+  const [data, setData] = useState<Info[]>([]);
   const [classData, setClassData] = useState<ClassDetails | null>(null);
   const [isResetting, setIsResetting] = useState<boolean>(false);
+  const [selectedClass, setSelectedClass] = useState<string>("");
 
   useEffect(() => {
     if (isResetting) {
@@ -41,19 +36,24 @@ const App = () => {
     fetchClasses();
   }, [isResetting]);
 
-  const handleClick = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const getClassData = async () => {
-      try {
-        const { data } = await axios.get<ClassDetails>(
-          `https://www.dnd5eapi.co/api/classes/${e.currentTarget.value}`
-        );
-        setClassData(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.currentTarget.value.length) {
+      const getClassData = async () => {
+        try {
+          const { data } = await axios.get<ClassDetails>(
+            `https://www.dnd5eapi.co/api/classes/${e.currentTarget.value}`
+          );
+          setClassData(data);
+        } catch (err) {
+          console.error(err);
+        }
+      };
 
-    getClassData();
+      setSelectedClass(e.currentTarget.value);
+      getClassData();
+    } else {
+      handleReset();
+    }
   };
   const handleReset = () => {
     setClassData(null);
@@ -69,10 +69,14 @@ const App = () => {
         >
           Reset
         </button>
-        <select className="w-[200px] text-slate-900" onChange={handleClick}>
+        <select className="w-[200px] text-slate-900" onChange={handleChange}>
           <option></option>
-          {data.map((info: ClassInfo, i: number) => (
-            <option key={`class_${i}`} value={info.index}>
+          {data.map((info: Info, i: number) => (
+            <option
+              key={`class_${i}`}
+              value={info.index}
+              onClick={() => console.log(info.name)}
+            >
               {info.name}
             </option>
           ))}
@@ -80,13 +84,19 @@ const App = () => {
         <div className="mt-4">
           {classData ? (
             <div className="text-center">
-              <div>Starting Hit Die - {classData.hit_die}</div>
+              <div className="mb-3">
+                Starting Hit Die -{" "}
+                <span className="font-bold">{classData.hit_die}</span>
+              </div>
+              <div className="font-semibold underline mb-2">
+                {selectedClass.substring(0, 1).toUpperCase() +
+                  selectedClass.substring(1)}{" "}
+                Proficiencies
+              </div>
               <ul>
-                {classData.proficiencies.map(
-                  (item: Proficiencies, i: number) => (
-                    <li key={`prof_${i}`}>{item.name}</li>
-                  )
-                )}
+                {classData.proficiencies.map((item: Info, i: number) => (
+                  <li key={`prof_${i}`}>{item.name}</li>
+                ))}
               </ul>
             </div>
           ) : (
