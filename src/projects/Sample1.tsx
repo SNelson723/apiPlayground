@@ -81,20 +81,24 @@ const Sample1 = () => {
         </div>
         <div className="mt-4">
           {details ? (
-            <div>
-              <div>
-                Height :<span>{details.height}</span>
-              </div>
-              <div>
-                Weight :<span>{details.weight}</span>
-              </div>
-              <div>
-                Base Experience: <span>{details.base_experience}</span>
-              </div>
-              <div>
-                Type: <span>{details.types[0].type.name}</span>
-              </div>
-            </div>
+            <ul>
+              <li>
+                Height : <span className="font-semibold">{details.height}</span>
+              </li>
+              <li>
+                Weight : <span className="font-semibold">{details.weight}</span>
+              </li>
+              <li>
+                Base Experience:{" "}
+                <span className="font-semibold">{details.base_experience}</span>
+              </li>
+              {details.types.map((type, i) => (
+                <li key={`type_${i}`}>
+                  Type {i + 1}:{" "}
+                  <span className="font-semibold">{type.type.name}</span>
+                </li>
+              ))}
+            </ul>
           ) : null}
         </div>
       </div>
