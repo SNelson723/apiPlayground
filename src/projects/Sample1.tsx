@@ -14,6 +14,7 @@ interface ClassDetails {
 }
 
 const Sample1 = () => {
+  const url = "https://www.dnd5eapi.co/api/classes/";
   const [data, setData] = useState<Info[]>([]);
   const [classData, setClassData] = useState<ClassDetails | null>(null);
   const [isResetting, setIsResetting] = useState<boolean>(false);
@@ -26,7 +27,7 @@ const Sample1 = () => {
 
     const fetchClasses = async () => {
       try {
-        const { data } = await axios.get("https://www.dnd5eapi.co/api/classes");
+        const { data } = await axios.get(url);
         setData(data.results);
       } catch (err) {
         console.error(err);
@@ -40,9 +41,13 @@ const Sample1 = () => {
     if (e.currentTarget.value.length) {
       const getClassData = async () => {
         try {
-          const { data } = await axios.get<ClassDetails>(
-            `https://www.dnd5eapi.co/api/classes/${e.currentTarget.value}`
-          );
+          const { data } = await axios({
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            url: url + e.currentTarget.value,
+          });
           setClassData(data);
         } catch (err) {
           console.error(err);
