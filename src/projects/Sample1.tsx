@@ -32,7 +32,7 @@ const Sample1 = () => {
         setPokemon(data.results);
       })
       .catch((err) => console.log(err));
-  }, [url]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.currentTarget.value) {
@@ -43,13 +43,31 @@ const Sample1 = () => {
         })
         .catch((err) => console.log(err));
     } else {
-      setDetails(null)
+      setDetails(null);
     }
+  };
+
+  const handleReset = () => {
+    setPokemon([]);
+    setDetails(null);
+
+    axios
+      .get(url)
+      .then(({ data }) => {
+        setPokemon(data.results);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div className="bg-slate-600 mt-36 w-full flex justify-center items-center">
       <div className="text-slate-100">
+        <button
+          className="block border-2 px-5 py-1 rounded-md mx-auto mb-4 bg-emerald-600 hover:bg-emerald-300 hover:text-slate-900 transition-all duration-300"
+          onClick={handleReset}
+        >
+          Reset
+        </button>
         <div className="text-center mb-2">Select a Pokemon</div>
         <div className="text-slate-900">
           <select className="w-[150px]" onChange={handleChange}>
@@ -64,10 +82,18 @@ const Sample1 = () => {
         <div className="mt-4">
           {details ? (
             <div>
-              <div>Height :<span>{details.height}</span></div>
-              <div>Weight :<span>{details.weight}</span></div>
-              <div>Base Experience: <span>{details.base_experience}</span></div>
-              <div>Type: <span>{details.types[0].type.name}</span></div>
+              <div>
+                Height :<span>{details.height}</span>
+              </div>
+              <div>
+                Weight :<span>{details.weight}</span>
+              </div>
+              <div>
+                Base Experience: <span>{details.base_experience}</span>
+              </div>
+              <div>
+                Type: <span>{details.types[0].type.name}</span>
+              </div>
             </div>
           ) : null}
         </div>
