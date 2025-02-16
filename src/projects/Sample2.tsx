@@ -14,7 +14,9 @@ interface Planet {
 }
 
 const Sample2 = () => {
-  const [url, setUrl] = useState<string>("https://swapi.dev/api/planets/");
+  const baseUrl: string = "https://swapi.dev/api/planets/";
+
+  const [url, setUrl] = useState<string>(baseUrl);
   const [planets, setPlanets] = useState<Planets[]>([]);
   const [prev, setPrev] = useState<string | null>(null);
   const [next, setNext] = useState<string | null>(null);
@@ -42,34 +44,48 @@ const Sample2 = () => {
   }, [url]);
 
   useEffect(() => {
-    const getPlanetInfo = async () => {
-      try {
-        const { data } = await axios({
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          url: planetUrl,
-        });
+    if (planetUrl) {
+      const getPlanetInfo = async () => {
+        try {
+          const { data } = await axios({
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            url: planetUrl,
+          });
 
-        console.log(data);
-        setPlanetData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+          setPlanetData(data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-    getPlanetInfo();
+      getPlanetInfo();
+    }
   }, [planetUrl]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPlanetUrl(e.currentTarget.value);
   };
 
+  const handleReset = () => {
+    setPlanetUrl("");
+    setPlanetData(null);
+    setPlanets([]);
+    setUrl(baseUrl);
+  };
+
   return (
     <div className="bg-slate-600 mt-36 w-full flex justify-center items-center">
       <div>
         <div>
+          <button
+            className="block border-2 px-5 py-1 rounded-md mx-auto mb-4 bg-emerald-600 hover:bg-emerald-300 hover:text-slate-900 transition-all duration-300"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
           <div className="mb-1 text-center">Select a Planet</div>
           <div className="flex items-center">
             <div
