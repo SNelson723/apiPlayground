@@ -4,36 +4,66 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 interface Planets {
   name: string;
+  url: string;
+}
+
+interface Planet {
+  name: string;
+  population: string;
+  climate: string;
 }
 
 const Sample2 = () => {
   const [url, setUrl] = useState<string>("https://swapi.dev/api/planets/");
   const [planets, setPlanets] = useState<Planets[]>([]);
-  const [prev, setPrev] = useState<string| null>(null);
+  const [prev, setPrev] = useState<string | null>(null);
   const [next, setNext] = useState<string | null>(null);
+  const [planetUrl, setPlanetUrl] = useState<string>("");
+  const [planetData, setPlanetData] = useState<Planet | null>(null);
 
   useEffect(() => {
-    const getPlanets = async () => {
-      console.log(url)
-      const { data } = await axios({
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        url: url,
-      });
+    if (url !== null) {
+      const getPlanets = async () => {
+        const { data } = await axios({
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          url: url,
+        });
 
-      console.log(data);
-      setPlanets(data.results);
-      setPrev(data.previous);
-      setNext(data.next);
-    };
+        setPlanets(data.results);
+        setPrev(data.previous);
+        setNext(data.next);
+      };
 
-    getPlanets();
+      getPlanets();
+    }
   }, [url]);
 
+  useEffect(() => {
+    const getPlanetInfo = async () => {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          url: planetUrl,
+        });
+
+        console.log(data);
+        setPlanetData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPlanetInfo();
+  }, [planetUrl]);
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.currentTarget.value);
+    setPlanetUrl(e.currentTarget.value);
   };
 
   return (
@@ -42,7 +72,12 @@ const Sample2 = () => {
         <div>
           <div className="mb-1 text-center">Select a Planet</div>
           <div className="flex items-center">
-            <div className={`border-2 py-1 px-1 rounded-lg ${prev === null ? 'disabled opacity-50': ''}`} onClick={() => setUrl(prev as string)}>
+            <div
+              className={`border-2 py-1 px-1 rounded-lg ${
+                prev === null ? "disabled opacity-50 pointer-events:-none" : ""
+              }`}
+              onClick={() => setUrl(prev as string)}
+            >
               <FaArrowLeft />
             </div>
             <select
@@ -51,13 +86,35 @@ const Sample2 = () => {
             >
               <option></option>
               {planets.map((planet: Planets, i: number) => (
-                <option key={`planet_${i}`}>{planet.name}</option>
+                <option key={`planet_${i}`} value={planet.url}>
+                  {planet.name}
+                </option>
               ))}
             </select>
-            <div className={`border-2 py-1 px-1 rounded-lg ${next === null ? 'disabled opacity-50': ''}`} onClick={() => setUrl(next as string)}>
+            <div
+              className={`border-2 py-1 px-1 rounded-lg ${
+                next === null ? "disabled opacity-50 pointer-events-none" : ""
+              }`}
+              onClick={() => setUrl(next as string)}
+            >
               <FaArrowRight />
             </div>
           </div>
+          {planetData ? (
+            <ul className="ml-10 my-5">
+              <li>
+                Name: <span className="font-semibold">{planetData.name}</span>
+              </li>
+              <li>
+                Population:{" "}
+                <span className="font-semibold">{planetData.population}</span>
+              </li>
+              <li>
+                Climate:{" "}
+                <span className="font-semibold">{planetData.climate}</span>
+              </li>
+            </ul>
+          ) : null}
         </div>
       </div>
     </div>
