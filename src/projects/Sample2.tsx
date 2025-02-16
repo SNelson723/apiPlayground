@@ -122,11 +122,11 @@ const Sample2 = () => {
                 Name: <span className="font-semibold">{planetData.name}</span>
               </li>
               <li>
-                Population:{" "}
+                Population:
                 <span className="font-semibold">{planetData.population}</span>
               </li>
               <li>
-                Climate:{" "}
+                Climate:
                 <span className="font-semibold">{planetData.climate}</span>
               </li>
             </ul>
