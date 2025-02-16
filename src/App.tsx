@@ -7,9 +7,16 @@ interface ClassInfo {
   url: string;
 }
 
+interface Proficiencies {
+  index: string;
+  name: string;
+  url: string;
+}
+
 interface ClassDetails {
   hit_die: number;
-  // Add other fields based on API response
+  proficiencies: Proficiencies[];
+  // and any other fields I want to use
 }
 
 const App = () => {
@@ -21,7 +28,7 @@ const App = () => {
     if (isResetting) {
       setData([]);
     }
-    
+
     const fetchClasses = async () => {
       try {
         const { data } = await axios.get("https://www.dnd5eapi.co/api/classes");
@@ -56,7 +63,10 @@ const App = () => {
   return (
     <div className="bg-slate-600 h-screen w-screen flex justify-center items-center">
       <div className="text-slate-100">
-        <button className="block border-2 px-5 py-1 rounded-md mx-auto mb-4 bg-emerald-600 hover:bg-emerald-300 hover:text-slate-900 transition-all duration-300" onClick={handleReset}>
+        <button
+          className="block border-2 px-5 py-1 rounded-md mx-auto mb-4 bg-emerald-600 hover:bg-emerald-300 hover:text-slate-900 transition-all duration-300"
+          onClick={handleReset}
+        >
           Reset
         </button>
         <select className="w-[200px] text-slate-900" onChange={handleClick}>
@@ -69,7 +79,16 @@ const App = () => {
         </select>
         <div className="mt-4">
           {classData ? (
-            <div>Starting Hit Die - {classData.hit_die}</div>
+            <div className="text-center">
+              <div>Starting Hit Die - {classData.hit_die}</div>
+              <ul>
+                {classData.proficiencies.map(
+                  (item: Proficiencies, i: number) => (
+                    <li key={`prof_${i}`}>{item.name}</li>
+                  )
+                )}
+              </ul>
+            </div>
           ) : (
             <div>Select a class to view details.</div>
           )}
