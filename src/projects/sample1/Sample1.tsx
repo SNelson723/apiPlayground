@@ -1,12 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Poke, PokeDetails } from "../../interfaces";
+import { PokeDetails } from "../../interfaces";
 import PokeCard from "./PokeCard";
 
 const Sample1 = () => {
   const url: string = "https://pokeapi.co/api/v2/pokemon/";
   const [pokemon, setPokemon] = useState<PokeDetails[]>([]);
-  const [details, setDetails] = useState<Poke | null>(null);
 
   useEffect(() => {
     axios
@@ -17,22 +16,8 @@ const Sample1 = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (e.currentTarget.value) {
-      axios
-        .get(e.currentTarget.value)
-        .then(({ data }) => {
-          setDetails(data);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      setDetails(null);
-    }
-  };
-
   const handleReset = () => {
     setPokemon([]);
-    setDetails(null);
 
     axios
       .get(url)
@@ -59,29 +44,6 @@ const Sample1 = () => {
             ))}
           </div>
         </div>
-        <div className="mt-4">
-          {details ? (
-            <ul>
-              <li>
-                Height : <span className="font-semibold">{details.height}</span>
-              </li>
-              <li>
-                Weight : <span className="font-semibold">{details.weight}</span>
-              </li>
-              <li>
-                Base Experience:{" "}
-                <span className="font-semibold">{details.base_experience}</span>
-              </li>
-              {details.types.map((type, i) => (
-                <li key={`type_${i}`}>
-                  Type {i + 1}:{" "}
-                  <span className="font-semibold">{type.type.name}</span>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-        {/* Maybe a grid? */}
       </div>
     </div>
   );

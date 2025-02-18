@@ -16,6 +16,7 @@ export interface Poke {
     };
   }[];
   id: number;
+  name: string;
 }
 
 export interface PokeCardProps {
