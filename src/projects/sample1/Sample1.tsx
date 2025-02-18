@@ -30,8 +30,6 @@ const Sample1 = () => {
     }
   };
 
-  console.log(pokemon)
-
   const handleReset = () => {
     setPokemon([]);
     setDetails(null);
@@ -55,19 +53,9 @@ const Sample1 = () => {
         </button>
         <div className="text-center mb-2">Select a Pokemon</div>
         <div className="text-slate-900">
-          {/* <select className="w-[150px]" onChange={handleChange}>
-            <option></option>
-            {pokemon.map((poke: PokeDetails, i: number) => (
-              <option key={`pokemon_${i}`} value={poke.url}>
-                {poke.name}
-              </option>
-            ))}
-          </select> */}
           <div className="grid grid-cols-10">
             {pokemon.map((poke: PokeDetails, i: number) => (
-              <PokeCard
-                url={`"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${poke.id}.png"`}
-              />
+              <PokeCard key={`pokemon_${i}`} name={poke.name} url={poke.url} />
             ))}
           </div>
         </div>
