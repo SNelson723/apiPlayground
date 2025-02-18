@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 
 import Home from "./Home.tsx";
-import Sample1 from "./projects/Sample1.tsx";
+import Sample1 from "./projects/sample1/Sample1.tsx";
 import Sample2 from "./projects/Sample2.tsx";
 import Sample3 from "./projects/Sample3.tsx";
 
