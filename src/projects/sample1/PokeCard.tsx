@@ -11,6 +11,7 @@ const PokeCard = ({ name, url }: PokeCardProps) => {
       .get(url)
       .then(({ data }) => {
         const j: Poke = data;
+        setDetails(j);
         setId(j.id)
         console.log(j);
       })
@@ -18,14 +19,14 @@ const PokeCard = ({ name, url }: PokeCardProps) => {
   }, [url]);
 
   return (
-    <div className="w-full">
+    <div className="w-32">
       {id ? (
-        <div className="border-2 rounded-xl px-2 pb-2 bg-fuchsia-600">
+        <div className="flex flex-col border-2 rounded-xl px-2 pb-2 bg-violet-300 bg-opacity-40">
           <img
             alt={name}
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
           />
-          <div className="text-center">{name}</div>
+          <div className="text-center font-semibold">{name[0].toUpperCase()}{name.substring(1)}</div>
         </div>
       ) : null}
     </div>

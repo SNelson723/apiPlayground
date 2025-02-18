@@ -53,7 +53,7 @@ const Sample1 = () => {
         </button>
         <div className="text-center mb-2">Select a Pokemon</div>
         <div className="text-slate-900">
-          <div className="grid grid-cols-10">
+          <div className="grid grid-cols-8 gap-8">
             {pokemon.map((poke: PokeDetails, i: number) => (
               <PokeCard key={`pokemon_${i}`} name={poke.name} url={poke.url} />
             ))}
