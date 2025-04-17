@@ -1,8 +1,7 @@
 import { createContext, useContext } from "react";
 
 type ModalStepContextType = {
-  idx: number;
-  setIdx: (idx: number) => void;
+  onClose: () => void;
   next: () => void;
   prev: () => void;
 };

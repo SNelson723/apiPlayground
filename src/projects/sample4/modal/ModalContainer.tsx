@@ -1,4 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { ModalStepContext } from "./ModalContext";
 
@@ -9,13 +14,13 @@ export type ModalHandle = {
 type ModalProps = {
   show: boolean;
   children: React.ReactNode[];
-  onClose: () => void; // The onClose function prop is used to propagate the default "close" event that can be triggered by <dialog> (for example, when the ESC key is pressed)
+  onClose: () => void;
 };
 
 const Modal = forwardRef<ModalHandle, ModalProps>(
   ({ children, onClose, show }, ref) => {
     const dialog = useRef<HTMLDialogElement>(null);
-    const [idx, setIdx] = useState<number>(0);
+    const [idx, setIdx] = useState(0);
 
     const next = () =>
       setIdx((i) => Math.min(i + 1, React.Children.count(children) - 1));
@@ -32,7 +37,7 @@ const Modal = forwardRef<ModalHandle, ModalProps>(
         className="modal w-1/3 top-1/3 flex justify-center"
         onClose={onClose}
       >
-        <ModalStepContext.Provider value={{ idx, setIdx, next, prev }}>
+        <ModalStepContext.Provider value={{ next, prev, onClose }}>
           {Array.isArray(children) ? children[idx] : children}
         </ModalStepContext.Provider>
       </dialog>,

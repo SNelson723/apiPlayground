@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import Modal, {ModalHandle} from "./modal/ModalContainer";
+import Modal, { ModalHandle } from "./modal/ModalContainer";
 import TestModal1 from "./modal/TestModal1";
 import TestModal2 from "./modal/TestModal2";
 
@@ -17,10 +17,16 @@ const Sample4 = () => {
         >
           {showModal ? "Hide" : "Show"} Modal
         </button>
-        {showModal && <Modal ref={modal} onClose={() => setShowModal(false)} show={showModal}>
-          <TestModal1 />
-          <TestModal2 />
-        </Modal>}
+        {showModal && (
+          <Modal
+            ref={modal}
+            onClose={() => setShowModal(false)}
+            show={showModal}
+          >
+            <TestModal1 />
+            <TestModal2 />
+          </Modal>
+        )}
       </div>
     </div>
   );

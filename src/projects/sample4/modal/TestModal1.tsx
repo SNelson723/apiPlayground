@@ -1,24 +1,22 @@
-import { useRef } from "react";
-
-// type ModalProps = {
-//   next?: () => void;
-//   prev?: () => void;
-//   onClose?: () => void;
-// };
+import { useRef, useContext } from "react";
+import { ModalStepContext } from "./ModalContext";
 
 const TestModal1 = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const ctx = useContext(ModalStepContext);
 
-  // Helper for animating out, then calling the parent
-  // const animateAndCall = (cb: () => void) => {
-  //   if (!ref.current) return;
-  //   ref.current.setAttribute("data-display", "closed");
-  //   const handleAnimationEnd = () => {
-  //     cb();
-  //     ref.current?.removeEventListener("animationend", handleAnimationEnd);
-  //   };
-  //   ref.current.addEventListener("animationend", handleAnimationEnd);
-  // };
+  if (!ctx) throw new Error("TestModal1 must be used within ModalStepContext");
+  const { next, prev, onClose } = ctx;
+
+  const animateAndCall = (cb: () => void) => {
+    if (!ref.current) return;
+    ref.current.setAttribute("data-display", "closed");
+    const handleAnimationEnd = () => {
+      cb();
+      ref.current?.removeEventListener("animationend", handleAnimationEnd);
+    };
+    ref.current.addEventListener("animationend", handleAnimationEnd);
+  };
 
   return (
     <div
@@ -30,19 +28,19 @@ const TestModal1 = () => {
       <div className="gap-4 flex justify-center items-center">
         <button
           className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded"
-          // onClick={() => animateAndCall(prev!)}
+          onClick={() => animateAndCall(prev)}
         >
           Prev
         </button>
         <button
           className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded"
-          // onClick={() => animateAndCall(next!)}
+          onClick={() => animateAndCall(next)}
         >
           Next
         </button>
         <button
           className="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded"
-          // onClick={() => animateAndCall(onClose!)}
+          onClick={() => animateAndCall(onClose)}
         >
           Cancel
         </button>
