@@ -6,7 +6,7 @@ const TestModal1 = () => {
   const ctx = useContext(ModalStepContext);
 
   if (!ctx) throw new Error("TestModal1 must be used within ModalStepContext");
-  const { next, prev, onClose } = ctx;
+  const { next, prev, onClose, idx } = ctx;
 
   const animateAndCall = (cb: () => void) => {
     if (!ref.current) return;
@@ -17,6 +17,8 @@ const TestModal1 = () => {
     };
     ref.current.addEventListener("animationend", handleAnimationEnd);
   };
+
+  console.log(idx);
 
   return (
     <div

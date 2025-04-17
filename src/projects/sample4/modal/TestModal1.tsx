@@ -6,7 +6,8 @@ const TestModal1 = () => {
   const ctx = useContext(ModalStepContext);
 
   if (!ctx) throw new Error("TestModal1 must be used within ModalStepContext");
-  const { next, prev, onClose } = ctx;
+  const { next, prev, onClose, idx } = ctx;
+  console.log(idx)
 
   const animateAndCall = (cb: () => void) => {
     if (!ref.current) return;
@@ -22,6 +23,7 @@ const TestModal1 = () => {
     <div
       ref={ref}
       data-display="open"
+      // className={`flex justify-center items-center flex-col gap-6 p-4 bg-slate-50 w-1/3 rounded-lg shadow-lg ${idx === 0 ? "animate-slidein" : "animate-slideout"}`}
       className="flex justify-center items-center flex-col gap-6 p-4 bg-slate-50 w-1/3 rounded-lg shadow-lg data-[display=open]:animate-slidein data-[display=closed]:animate-slideout"
     >
       <div className="text-2xl">Test Modal 1</div>

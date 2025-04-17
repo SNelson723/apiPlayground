@@ -37,7 +37,7 @@ const Modal = forwardRef<ModalHandle, ModalProps>(
         className="modal w-1/3 top-1/3 flex justify-center"
         onClose={onClose}
       >
-        <ModalStepContext.Provider value={{ next, prev, onClose }}>
+        <ModalStepContext.Provider value={{ next, prev, onClose, idx }}>
           {Array.isArray(children) ? children[idx] : children}
         </ModalStepContext.Provider>
       </dialog>,

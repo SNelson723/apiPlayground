@@ -4,6 +4,7 @@ type ModalStepContextType = {
   onClose: () => void;
   next: () => void;
   prev: () => void;
+  idx: number;
 };
 
 export const ModalStepContext = createContext<ModalStepContextType | undefined>(
