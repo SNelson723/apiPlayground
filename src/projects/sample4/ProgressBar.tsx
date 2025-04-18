@@ -6,7 +6,7 @@ type ProgressBarProps = HTMLAttributes<HTMLDivElement> & {
   speed: number;
 };
 
-const ProgressBar = ({ current, goal, speed, ...rest }: ProgressBarProps) => {
+const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
   const [progress, setProgress] = useState<number>(0);
 
   // Calculate the raw percentage (can be over 100)
@@ -29,20 +29,16 @@ const ProgressBar = ({ current, goal, speed, ...rest }: ProgressBarProps) => {
     if (progress === target) return;
 
     const increment = target > progress ? 1 : -1;
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (
-          (increment > 0 && prev >= target) ||
-          (increment < 0 && prev <= target)
-        ) {
-          clearInterval(interval);
-          return target;
-        }
-        return prev + increment;
-      });
-    }, speed);
+    setProgress((prev) => {
+      if (
+        (increment > 0 && prev >= target) ||
+        (increment < 0 && prev <= target)
+      ) {
+        return target;
+      }
+      return prev + increment;
+    });
 
-    return () => clearInterval(interval);
   }, [current, goal, progress]);
 
   const rawPercent = getRawPercent();
