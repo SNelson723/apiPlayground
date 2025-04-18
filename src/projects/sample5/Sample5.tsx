@@ -29,7 +29,7 @@ const Sample5 = () => {
             <Card.Header>
               <HeaderSample />
             </Card.Header>
-            <Card.Body>
+            <Card.Body onClick={() => console.log("clicked")}>
               <BodySample data={data} />
             </Card.Body>
             <Card.Footer>

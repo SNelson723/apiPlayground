@@ -13,11 +13,6 @@ const SampleFooter = ({ max, min, median, avg }: FooterProps) => {
       <p>Min: {min}</p>
       <p>Median: {median}</p>
       <p>Avg: {avg}</p>
-      {/* <p className="font-semibold">TTL</p>
-      {/* <p>Max: 92%</p>
-      <p>Min: 29%</p>
-      <p>Median: 60.5%</p>
-      <p>Avg:</p> */}
     </div>
   );
 };

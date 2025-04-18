@@ -34,7 +34,7 @@ const Modal = forwardRef<ModalHandle, ModalProps>(
       <dialog
         ref={dialog}
         open={show}
-        className="modal w-1/3 top-1/3 flex justify-center overflow-hidden items-center p-4 rounded-lg shadow-lg bg-slate-50"
+        className="modal w-1/2 top-1/3 flex justify-center overflow-hidden items-center p-4 rounded-lg shadow-lg bg-slate-50"
         onClose={onClose}
       >
         <ModalStepContext.Provider value={{ next, prev, onClose, idx }}>

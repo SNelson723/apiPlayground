@@ -36,7 +36,6 @@ const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
 
   const rawPercent = getRawPercent();
   const colorClass = getColorClass(progress);
-  if (colorClass) console.log(colorClass);
 
   return (
     <div {...rest}>

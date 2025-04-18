@@ -25,8 +25,8 @@ type CardContextType = {
 const CardContext = createContext<CardContextType | null>(null);
 
 // Body receives children as props and renders them inside a div with padding
-const Body = ({ children }: CardChildrenProps) => (
-  <div className="p-1 w-full h-full border-y-2">{children}</div>
+const Body = ({ children, onClick }: CardChildrenProps) => (
+  <div className="p-1 w-full h-full border-y-2" onClick={onClick}>{children}</div>
 );
 
 // Header does the same as Body, but also consumes the context to display the subHeader string if it exists

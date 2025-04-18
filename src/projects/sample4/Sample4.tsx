@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import Modal, { ModalHandle } from "./modal/ModalContainer";
 import TestModal1 from "./modal/TestModal1";
 import TestModal2 from "./modal/TestModal2";
-import ProgressBar from "./ProgressBar";
+import TestModal3 from "./modal/SampleModal";
 
 const Sample4 = () => {
   const modal = useRef<ModalHandle>(null);
@@ -26,6 +26,7 @@ const Sample4 = () => {
           >
             <TestModal1 />
             <TestModal2 />
+            <TestModal3 />
           </Modal>
         )}
       </div>
