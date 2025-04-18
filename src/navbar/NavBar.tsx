@@ -1,35 +1,39 @@
 import { NavLink } from "react-router-dom";
 
-const NavBar = () => {
-  return (
-    <div className="w-full flex justify-center">
-      <div className="border text-center py-2 mx-5 rounded-b-md hover:bg-green-300 hover:text-black animate-all duration-500 bg-emerald-500">
-        <NavLink to="sample1" className="px-5 mx-5">
-          Sample 1
-        </NavLink>
-      </div>
-      <div className=" border text-center rounded-b-md mx-5 py-2 hover:bg-green-300 hover:text-black animate-all duration-500 bg-emerald-500">
-        <NavLink to="sample2" className="px-5 mx-5">
-          Sample 2
-        </NavLink>
-      </div>
-      <div className=" border text-center rounded-b-md mx-5 py-2 hover:bg-green-300 hover:text-black animate-all duration-500 bg-emerald-500">
-        <NavLink to="sample3" className="px-5 mx-5">
-          Sample 3
-        </NavLink>
-      </div>
-      <div className=" border text-center rounded-b-md mx-5 py-2 hover:bg-green-300 hover:text-black animate-all duration-500 bg-emerald-500">
-        <NavLink to="sample4" className="px-5 mx-5">
-          Sample 4
-        </NavLink>
-      </div>
-      <div className=" border text-center rounded-b-md mx-5 py-2 hover:bg-green-300 hover:text-black animate-all duration-500 bg-emerald-500">
-        <NavLink to="sample5" className="px-5 mx-5">
-          Sample 5
-        </NavLink>
-      </div>
-    </div>
-  );
-};
+const baseClass =
+  "border text-center py-2 mx-5 px-10 rounded-b-md animate-all duration-500 bg-emerald-500 hover:bg-green-300 hover:text-black font-semibold";
+const activeClass = "bg-green-300 text-black";
+
+interface NavLinkProps {
+  to: string;
+  label: string;
+}
+
+const navLinks: NavLinkProps[] = [
+  { to: "sample1", label: "Sample 1" },
+  { to: "sample2", label: "Sample 2" },
+  { to: "sample3", label: "Sample 3" },
+  { to: "sample4", label: "Sample 4" },
+  { to: "sample5", label: "Sample 5" },
+];
+
+// The isActive prop is used to determine if the link is currently active
+// it's a built in React Router feature for the NavLink component
+// This can help style based on whether the to property is the same as the current URL
+const NavBar = () => (
+  <div className="w-full flex justify-center">
+    {navLinks.map((link: NavLinkProps) => (
+      <NavLink
+        key={link.to}
+        to={link.to}
+        className={({ isActive }) =>
+          `${baseClass} ${isActive ? activeClass : ""}`
+        }
+      >
+        {link.label}
+      </NavLink>
+    ))}
+  </div>
+);
 
 export default NavBar;

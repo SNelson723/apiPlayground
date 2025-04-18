@@ -1,43 +1,64 @@
-import React, { createContext, useContext } from "react";
+import {
+  createContext,
+  useContext,
+  type ReactNode,
+  type FC,
+  type HTMLAttributes,
+} from "react";
 
+// Define the props for the main Card component and its children. The subHeader string is optional, but can expand if needed
 type CardProps = {
-  children: React.ReactNode;
-  test?: string;
+  children: ReactNode;
+  subHeader?: string;
 };
 
+// CardChildrenProps extends HTMLAttributes to allow passing any valid HTML attributes to the children components
+type CardChildrenProps = {
+  children: ReactNode;
+} & HTMLAttributes<HTMLDivElement>;
+
+// CardContextType defines the type of the context value, which can be expanded if needed
+// It is then used in CardContext that creates the React context to share the subHeader string with the children components
 type CardContextType = {
-  test?: string;
+  subHeader?: string;
 };
-
 const CardContext = createContext<CardContextType | null>(null);
 
-const Body = ({ children }: { children: React.ReactNode }) => (
-  <div className="p-1">{children}</div>
+// Body receives children as props and renders them inside a div with padding
+const Body = ({ children }: CardChildrenProps) => (
+  <div className="p-1 w-full h-full border-y-2">{children}</div>
 );
 
-const Header = ({ children }: { children: React.ReactNode }) => {
-  const { test } = useContext(CardContext) || {};
+// Header does the same as Body, but also consumes the context to display the subHeader string if it exists
+const Header = ({ children }: CardChildrenProps) => {
+  const { subHeader } = useContext(CardContext) || {};
   return (
-    <div className="p-1">
+    <div className="p-1 w-full h-full">
       {children}
-      {test && <span>{test}</span>}
+      {subHeader && <p>{subHeader}</p>}
     </div>
   );
 };
 
-const Footer = ({ children }: { children: React.ReactNode }) => (
-  <div className="p-1">{children}</div>
+// Footer does the same as Body
+const Footer = ({ children }: CardChildrenProps) => (
+  <div className="p-1 w-full h-full">{children}</div>
 );
 
-type CardComponent = React.FC<CardProps> & {
+// This type extends the React functional component type for Card to also include static props for the subcomponents
+// This allows us to use Card.Header, Card.Body, and Card.Footer as static properties of the Card component
+type CardComponent = FC<CardProps> & {
   Header: typeof Header;
   Body: typeof Body;
   Footer: typeof Footer;
 };
 
-const Card: CardComponent = ({ children, test }) => (
-  <CardContext.Provider value={{ test }}>
-    <div className="border-2 border-gray-300 rounded-lg shadow-md">
+// This Card component is the main component that uses the CardContext to provide the subHeader string to its children
+// It also glues all the pieces together by defining the static properties for the subcomponents
+const Card: CardComponent = ({ children, subHeader }) => (
+  // CardContext.Provider is used to provide the subHeader string and any other added context values to the children components
+  <CardContext.Provider value={{ subHeader }}>
+    <div className="border-2 border-gray-300 bg-slate-100 text-stone-950 rounded-lg shadow-md w-full h-full p-2">
       {children}
     </div>
   </CardContext.Provider>
