@@ -3,9 +3,10 @@ import { useEffect, useState, type HTMLAttributes } from "react";
 type ProgressBarProps = HTMLAttributes<HTMLDivElement> & {
   current: number;
   goal: number;
+  speed: number;
 };
 
-const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
+const ProgressBar = ({ current, goal, speed, ...rest }: ProgressBarProps) => {
   const [progress, setProgress] = useState<number>(0);
 
   // Calculate the raw percentage (can be over 100)
@@ -39,7 +40,7 @@ const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
         }
         return prev + increment;
       });
-    }, 10);
+    }, speed);
 
     return () => clearInterval(interval);
   }, [current, goal, progress]);
