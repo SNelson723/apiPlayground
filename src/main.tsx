@@ -12,6 +12,7 @@ import Sample3 from "./projects/Sample3.tsx";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sample4 from "./projects/sample4/Sample4.tsx";
+import Sample5 from "./projects/sample5/Sample5.tsx";
 
 // Lazy load Sample1
 const Sample1 = lazy(() => import("./projects/sample1/Sample1.tsx"));
@@ -35,6 +36,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="sample2" element={<Sample2 />} />
           <Route path="sample3" element={<Sample3 />} />
           <Route path="sample4" element={<Sample4 />} />
+          <Route path="sample5" element={<Sample5 />} />
         </Route>
       </Routes>
     </BrowserRouter>

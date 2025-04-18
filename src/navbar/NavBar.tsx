@@ -23,6 +23,11 @@ const NavBar = () => {
           Sample 4
         </NavLink>
       </div>
+      <div className=" border text-center rounded-b-md mx-5 py-2 hover:bg-green-300 hover:text-black animate-all duration-500 bg-emerald-500">
+        <NavLink to="sample5" className="px-5 mx-5">
+          Sample 5
+        </NavLink>
+      </div>
     </div>
   );
 };
