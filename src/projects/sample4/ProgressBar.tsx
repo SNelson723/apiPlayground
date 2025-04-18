@@ -1,14 +1,19 @@
 import { useEffect, useState, type HTMLAttributes } from "react";
+import { convertUSD } from "../../utils";
 
 type ProgressBarProps = HTMLAttributes<HTMLDivElement> & {
   current: number;
   goal: number;
-  speed: number;
+};
+
+const getColorClass = (progress: number) => {
+  if (progress < 50) return "bg-red-500 text-red-500";
+  if (progress < 75) return "bg-yellow-500 text-yellow-500";
+  return "bg-emerald-500 text-emerald-500";
 };
 
 const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
   const [progress, setProgress] = useState<number>(0);
-  const [color, setColor] = useState<string>("emerald-500");
 
   // Calculate the raw percentage (can be over 100)
   const getRawPercent = () => {
@@ -26,41 +31,42 @@ const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
   };
 
   useEffect(() => {
-    const target = getClampedPercent();
-    if (progress === target) {
-      if (progress <= 50) {
-        setColor("red-500");
-      } else if (progress <= 75) {
-        setColor("yellow-500");
-      } else {
-        setColor("emerald-500");
-      }
-      return;
-    }
-
-    const increment = target > progress ? 1 : -1;
-    setProgress((prev) => {
-      if (
-        (increment > 0 && prev >= target) ||
-        (increment < 0 && prev <= target)
-      ) {
-        return target;
-      }
-      return prev + increment;
-    });
-  }, [current, goal, progress]);
+    setProgress(getClampedPercent());
+  }, [current, goal]);
 
   const rawPercent = getRawPercent();
+  const colorClass = getColorClass(progress);
+  if (colorClass) console.log(colorClass);
 
   return (
     <div {...rest}>
-      <div className={`mb-1 text-center font-semibold text-${color}`}>
-        {rawPercent}%
+      <div
+        className={`mb-1 flex gap-2 items-end text-sm font-semibold ${
+          colorClass.split(" ")[1]
+        }`}
+      >
+        <div className="border-2 rounded-full py-1.5 px-0.5 border-black text-sm bg-white">
+          {rawPercent}%
+        </div>
+        <div className="grid grid-cols-2 ">
+          <div className="text-black">
+            Current: {convertUSD(current).split(".")[0]}
+          </div>
+          <div className="text-black">
+            Remaining: {convertUSD(goal - current).split(".")[0]}
+          </div>
+          <div className="text-black">
+            Goal: {convertUSD(goal).split(".")[0]}
+          </div>
+          <div className="text-black">{100 - rawPercent}</div>
+        </div>
       </div>
-      <div className="h-6 w-full border-2 border-fuchsia-400 bg-slate-50 rounded-full overflow-hidden my-2">
+      <div className="h-7 w-full border-2 border-fuchsia-400 bg-slate-50 rounded-full overflow-hidden my-2">
         <div
           style={{ width: `${progress}%` }}
-          className={`h-full bg-${color} transition-all rounded-r-full duration-300 ease-in-out`}
+          className={`h-full transition-all rounded-r-full duration-300 ease-in-out ${
+            colorClass.split(" ")[0]
+          }`}
         ></div>
       </div>
     </div>

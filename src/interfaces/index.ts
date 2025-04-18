@@ -23,3 +23,9 @@ export interface PokeCardProps {
   name: string;
   url: string;
 }
+
+export interface Progress {
+  current: number;
+  goal: number;
+  speed: number;
+}

@@ -35,7 +35,7 @@ const Header = ({ children }: CardChildrenProps) => {
   return (
     <div className="p-1 w-full h-full">
       {children}
-      {subHeader && <p>{subHeader}</p>}
+      {subHeader && <p className="text-center">{subHeader}</p>}
     </div>
   );
 };

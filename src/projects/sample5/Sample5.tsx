@@ -2,30 +2,24 @@ import Card from "./card/cardContext";
 import HeaderSample from "./card/HeaderSample";
 import BodySample from "./card/BodySample";
 import FooterSample from "./card/FooterSample";
-import { Progress } from "./card/BodySample";
+import { getAverage, getMedian } from "../../utils";
+import { Progress } from "../../interfaces";
+
+
+const data: Progress[] = [
+  { current: 4600, goal: 5024, speed: 50 },
+  { current: 1800, goal: 3621, speed: 50 },
+  { current: 560, goal: 1964, speed: 50 },
+  { current: 2300, goal: 4000, speed: 50 },
+];
 
 const Sample5 = () => {
-  // move this to Sample5.tsx
-  const getAverage = (arr: Progress[]) => {
-    if (!arr.length) return 0;
-    const sum = arr.reduce((acc, val) => acc + val.current, 0);
-    return sum / arr.length;
-  }
 
-  // move this to Sample5.tsx as well or a utils file
-  const getMedian = (arr: Progress[]) => {
-    if (!arr.length) return 0;
-    const sorted = [...arr].sort((a, b) => a - b);
-    const mid = Math.floor(sorted.length / 2);
+  const avg = getAverage(data);
+  const median = getMedian(data);
+  const max = Math.max(...data.map((d) => d.current));
+  const min = Math.min(...data.map((d) => d.current));
 
-    if (sorted.length % 2 !== 0) {
-      // Odd number of elements
-      return sorted[mid].current;
-    } else {
-      // Even number of elements
-      return (sorted[mid - 1].current + sorted[mid].current) / 2;
-    }
-  }
   return (
     <div className="w-screen">
       <div className="w-full flex flex-col items-center gap-8 mt-12">
@@ -36,10 +30,10 @@ const Sample5 = () => {
               <HeaderSample />
             </Card.Header>
             <Card.Body>
-              <BodySample />
+              <BodySample data={data} />
             </Card.Body>
             <Card.Footer>
-              <FooterSample />
+              <FooterSample max={max} min={min} median={median} avg={avg} />
             </Card.Footer>
           </Card>
         </div>
