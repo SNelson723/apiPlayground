@@ -24,7 +24,7 @@ const TestModal1 = () => {
       ref={ref}
       data-display="open"
       // className={`flex justify-center items-center flex-col gap-6 p-4 bg-slate-50 w-1/3 rounded-lg shadow-lg ${idx === 0 ? "animate-slidein" : "animate-slideout"}`}
-      className="flex justify-center items-center flex-col gap-6 p-4 bg-slate-50 w-1/3 rounded-lg shadow-lg data-[display=open]:animate-slidein data-[display=closed]:animate-slideout"
+      className="flex justify-center items-center flex-col gap-6 p-4 w-full rounded-lg shadow-lg data-[display=open]:animate-slidein data-[display=closed]:animate-slideout"
     >
       <div className="text-2xl">Test Modal 1</div>
       <div className="gap-4 flex justify-center items-center">

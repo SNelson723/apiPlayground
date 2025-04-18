@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Modal, { ModalHandle } from "./modal/ModalContainer";
 import TestModal1 from "./modal/TestModal1";
 import TestModal2 from "./modal/TestModal2";
+import ProgressBar from "./ProgressBar";
 
 const Sample4 = () => {
   const modal = useRef<ModalHandle>(null);
@@ -11,6 +12,7 @@ const Sample4 = () => {
     <div className="bg-slate-600 mt-12 w-full flex flex-col gap-6 justify-center items-center">
       <div>Sliding Modals</div>
       <div id="modal-root">
+        <ProgressBar />
         <button
           className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded"
           onClick={() => setShowModal(!showModal)}
