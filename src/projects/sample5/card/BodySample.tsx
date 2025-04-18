@@ -1,6 +1,6 @@
 import ProgressBar from "../../sample4/ProgressBar";
 
-interface Progress {
+export interface Progress {
   current: number;
   goal: number;
   speed: number;
@@ -15,7 +15,7 @@ const data: Progress[] = [
 
 const BodySample = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full bg-gray-200">
+    <div className="flex flex-col items-center justify-center h-full w-full">
       <div className="grid grid-cols-2 gap-4 w-full h-full p-4">
         {data.map((progress, index) => (<ProgressBar key={index} {...progress} />))}
       </div>

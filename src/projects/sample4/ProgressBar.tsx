@@ -8,6 +8,7 @@ type ProgressBarProps = HTMLAttributes<HTMLDivElement> & {
 
 const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
   const [progress, setProgress] = useState<number>(0);
+  const [color, setColor] = useState<string>("emerald-500");
 
   // Calculate the raw percentage (can be over 100)
   const getRawPercent = () => {
@@ -26,7 +27,16 @@ const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
 
   useEffect(() => {
     const target = getClampedPercent();
-    if (progress === target) return;
+    if (progress === target) {
+      if (progress <= 50) {
+        setColor("red-500");
+      } else if (progress <= 75) {
+        setColor("yellow-500");
+      } else {
+        setColor("emerald-500");
+      }
+      return;
+    }
 
     const increment = target > progress ? 1 : -1;
     setProgress((prev) => {
@@ -38,20 +48,19 @@ const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
       }
       return prev + increment;
     });
-
   }, [current, goal, progress]);
 
   const rawPercent = getRawPercent();
 
   return (
     <div {...rest}>
-      <div className="mb-1 text-center font-semibold text-emerald-700">
+      <div className={`mb-1 text-center font-semibold text-${color}`}>
         {rawPercent}%
       </div>
       <div className="h-6 w-full border-2 border-fuchsia-400 bg-slate-50 rounded-full overflow-hidden my-2">
         <div
           style={{ width: `${progress}%` }}
-          className="h-full bg-emerald-500 transition-all rounded-r-full duration-300 ease-in-out"
+          className={`h-full bg-${color} transition-all rounded-r-full duration-300 ease-in-out`}
         ></div>
       </div>
     </div>
