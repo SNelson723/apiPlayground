@@ -57,7 +57,7 @@ const ProgressBar = ({ current, goal, ...rest }: ProgressBarProps) => {
           <div className="text-black">
             Goal: {convertUSD(goal).split(".")[0]}
           </div>
-          <div className="text-black">{100 - rawPercent}</div>
+          <div className="text-black text-right">{100 - rawPercent}%</div>
         </div>
       </div>
       <div className="h-7 w-full border-2 border-fuchsia-400 bg-slate-50 rounded-full overflow-hidden my-2">
