@@ -10,6 +10,7 @@ interface NavLinkProps {
 }
 
 const navLinks: NavLinkProps[] = [
+  { to: "/", label: "Home" },
   { to: "sample1", label: "Sample 1" },
   { to: "sample2", label: "Sample 2" },
   { to: "sample3", label: "Sample 3" },
