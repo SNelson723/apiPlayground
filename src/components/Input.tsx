@@ -1,6 +1,6 @@
 import { PositionProps } from ".";
 
-const Input = ({ top, left, onDrop, onDragStart }: PositionProps) => {
+const Input = ({ top, left }: PositionProps) => {
   return (
     <div
       style={{
@@ -8,10 +8,6 @@ const Input = ({ top, left, onDrop, onDragStart }: PositionProps) => {
         top,
         left,
       }}
-      draggable
-      onDrop={onDrop}
-      onDragStart={onDragStart}
-      onDragOver={(e) => e.preventDefault()}
       className="select-none"
     >
       <label className="text-xl font-bold">Input</label>

@@ -6,7 +6,6 @@ import {
   type Testing,
   type ComponentId,
 } from "./features/appSlice";
-
 import WidgetContainer from "./components/WidgetContainer";
 import { componentMap } from "./components";
 
@@ -47,10 +46,10 @@ const Home = () => {
   };
 
   // for existing components in the dashboard
-  const handleDragStart =
-    (uid: string) => (e: React.DragEvent<HTMLDivElement>) => {
-      e.dataTransfer.setData("uid", uid); // stores the unique ID of the component being dragged.
-    };
+  // const handleDragStart =
+  //   (uid: string) => (e: React.DragEvent<HTMLDivElement>) => {
+  //     e.dataTransfer.setData("uid", uid); // stores the unique ID of the component being dragged.
+  //   };
 
   return (
     <div
@@ -69,8 +68,8 @@ const Home = () => {
               key={idx}
               top={test.top}
               left={test.left}
-              onDrop={handleDrop}
-              onDragStart={handleDragStart(test.uid)}
+              // onDrop={handleDrop}
+              // onDragStart={handleDragStart(test.uid)}
             />
           ) : null;
         })}

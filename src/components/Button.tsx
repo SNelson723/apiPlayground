@@ -1,13 +1,7 @@
 import { PositionProps } from ".";
 
-const Button = ({ top, left, onDrop, onDragStart }: PositionProps) => (
-  <div
-    className="select-none"
-    draggable
-    onDrop={onDrop}
-    onDragStart={onDragStart}
-    onDragOver={(e) => e.preventDefault()}
-  >
+const Button = ({ top, left }: PositionProps) => (
+  <div className="select-none">
     <button
       style={{
         position: "absolute",

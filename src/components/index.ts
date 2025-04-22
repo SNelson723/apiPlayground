@@ -5,9 +5,7 @@ import Input from "./Input";
 export type PositionProps = {
   top: number;
   left: number;
-  onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragStart: (e: React.DragEvent<HTMLDivElement>) => void;
-}
+};
 
 export const componentMap: Record<ComponentId, React.FC<PositionProps>> = {
   button: Button,
