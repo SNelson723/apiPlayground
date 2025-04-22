@@ -3,10 +3,10 @@ import { PositionProps } from ".";
 const Button = ({ top, left, onDrop, onDragStart }: PositionProps) => (
   <div
     className="select-none"
-    // draggable="true"
-    // onDrop={onDrop}
-    // onDragStart={onDragStart}
-    // onDragOver={(e) => e.preventDefault()}
+    draggable
+    onDrop={onDrop}
+    onDragStart={onDragStart}
+    onDragOver={(e) => e.preventDefault()}
   >
     <button
       style={{

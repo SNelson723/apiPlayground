@@ -54,12 +54,12 @@ const Home = () => {
   return (
     <div
       className="flex flex-col mt-12 items-center w-screen overflow-none"
-      onDragOver={handleDragOver}
     >
-      <WidgetContainer />
+        <WidgetContainer />
       <div
         className="mt-8 w-full max-h-[80vh] h-[80vh] border border-slate-50 p-4"
         onDrop={handleDrop}
+        onDragOver={handleDragOver}
       >
         {components.testing.map((test, idx) => {
           const DroppedComponent = componentMap[test.id];

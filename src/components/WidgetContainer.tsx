@@ -17,12 +17,8 @@ const componentsList: { id: ComponentId; component: ComponentType }[] = [
 // When dragging starts, store the component's id in the drag event
 const handleDragStart =
   (id: ComponentId) => (e: React.DragEvent<HTMLDivElement>) => {
-    // e.dataTransfer.setData("id", id);
+    e.dataTransfer.setData("id", id);
   };
-
-// const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-//   e.preventDefault();
-// };
 
 const WidgetContainer = () => {
   return (
@@ -31,12 +27,13 @@ const WidgetContainer = () => {
       <div className="flex gap-6">
         <div className="flex gap-4">
           {componentsList.map((comp) => (
-            <div key={comp.id} className="flex flex-col items-center border border-white py-1 px-4 rounded-lg cursor-pointer">
-              <div
-                className="flex items-center justify-center"
-                draggable
-                onDragStart={handleDragStart(comp.id)}
-              >
+            <div
+              key={comp.id}
+              draggable
+              className="flex flex-col items-center border border-white py-1 px-4 rounded-lg cursor-pointer bg-red-400"
+              onDragStart={handleDragStart(comp.id)}
+            >
+              <div className="flex items-center justify-center">
                 {comp.id}
               </div>
             </div>
