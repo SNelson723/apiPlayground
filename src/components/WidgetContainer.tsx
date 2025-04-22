@@ -1,15 +1,15 @@
-import Button from "./Button";
+import Button, { PositionProps } from "./Button";
 import Input from "./Input";
 
 // 1. Define a union type for component IDs
 type ComponentId = "button" | "input";
 
 // 2. Define a type for the component mapping
-type ComponentType = React.FC;
+type ComponentType = React.FC<PositionProps>;
 
 // 3. List of available draggable components, each with an id and the actual component
 const componentsList: { id: ComponentId; component: ComponentType }[] = [
-  { id: "button", component: Button },
+  { id: "button", component: (props: PositionProps) => <Button {...props} /> },
   { id: "input", component: Input },
 ];
 

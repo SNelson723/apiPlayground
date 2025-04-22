@@ -5,7 +5,7 @@ export type ComponentId = "button" | "input";
 
 export type Testing = {
   id: ComponentId;
-  component: React.FC;
+  // component: React.FC;
   top: number;
   left: number;
   width: number;

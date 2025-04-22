@@ -1,10 +1,24 @@
+import React from "react";
 
-const Button = () => {
-  return (
-    <button className="my-2 bg-emerald-400 text-white px-4 py-2 rounded">
-      Button Component
-    </button>
-  );
-};
+export interface PositionProps {
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+}
+
+const Button: React.FC<PositionProps> = ({ top, left, width, height }) => (
+  <button
+    style={{
+      position: "absolute",
+      top,
+      left,
+      width,
+      height,
+    }}
+  >
+    Button
+  </button>
+);
 
 export default Button;
