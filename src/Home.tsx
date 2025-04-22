@@ -14,6 +14,7 @@ const Home = () => {
   const components = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
 
+  // Handle drag over event to allow dropping
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
