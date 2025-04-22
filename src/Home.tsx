@@ -1,30 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
+import { useAppSelector, useAppDispatch } from "./hooks";
+import { addComponent } from "./features/appSlice";
+import type { ComponentId } from "./features/appSlice";
 
 import WidgetContainer from "./components/WidgetContainer";
 import Button from "./components/Button";
 import Input from "./components/Input";
 
 // 1. Define a union type for component IDs
-type ComponentId = "button" | "input";
+// type ComponentId = "button" | "input";
 
 // 2. Define a type for the component mapping
-type ComponentType = React.FC;
+// type ComponentType = React.FC;
 
-// 3. List of available draggable components, each with an id and the actual component
-// const componentsList: { id: ComponentId; component: ComponentType }[] = [
-//   { id: "button", component: Button },
-//   { id: "input", component: Input },
-// ];
-
-// 4. Map component ids to their actual component for rendering in the drop zone
-const componentMap: Record<ComponentId, ComponentType> = {
+// 3. Map component ids to their actual component for rendering in the drop zone
+const componentMap: Record<ComponentId, React.FC> = {
   button: Button,
   input: Input,
 };
 
 const Home: React.FC = () => {
   // State to keep track of the ids of components dropped into the drop zone
-  const [components, setComponents] = useState<ComponentId[]>([]);
+  // const [components, setComponents] = useState<ComponentId[]>([]);
+  const components = useAppSelector((state) => state.app.components);
+  const dispatch = useAppDispatch();
 
   // Allow dropping by preventing default drag-over behavior
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -35,8 +34,9 @@ const Home: React.FC = () => {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const type = e.dataTransfer.getData("componentType") as ComponentId;
-    if (type && componentMap[type]) {
-      setComponents((prev) => [...prev, type]);
+    if (componentMap[type]) {
+      // replace this with redux dispatch
+      dispatch(addComponent(type));
     }
   };
 
