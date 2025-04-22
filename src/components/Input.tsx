@@ -8,10 +8,10 @@ const Input = ({ top, left, onDrop, onDragStart }: PositionProps) => {
         top,
         left,
       }}
-      draggable="true"
-      onDrop={onDrop}
-      onDragStart={onDragStart}
-      onDragOver={(e) => e.preventDefault()}
+      // draggable="true"
+      // onDrop={onDrop}
+      // onDragStart={onDragStart}
+      // onDragOver={(e) => e.preventDefault()}
       className="select-none"
     >
       <label className="text-xl font-bold">Input</label>

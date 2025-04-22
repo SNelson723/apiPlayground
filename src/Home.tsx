@@ -7,7 +7,6 @@ import {
   type ComponentId,
 } from "./features/appSlice";
 
-// Import the WidgetContainer component, which contains the draggable components.
 import WidgetContainer from "./components/WidgetContainer";
 import { componentMap } from "./components";
 
@@ -28,7 +27,7 @@ const Home = () => {
     const draggedUid = e.dataTransfer.getData("uid");
 
     // grab the type of component being dragged from the widget container
-    const type = e.dataTransfer.getData("componentType") as ComponentId;
+    const type = e.dataTransfer.getData("id") as ComponentId;
 
     // if dragging an existing component => update its position
     if (draggedUid) {
