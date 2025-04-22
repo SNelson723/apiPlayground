@@ -13,13 +13,6 @@ const componentsList: { id: ComponentId; component: ComponentType }[] = [
   { id: "input", component: Input },
 ];
 
-// May need to move this
-// 4. Map component ids to their actual component for rendering in the drop zone
-// const componentMap: Record<ComponentId, ComponentType> = {
-//   button: Button,
-//   input: Input,
-// };
-
 // When dragging starts, store the component's id in the drag event
 const handleDragStart =
   (id: ComponentId) => (e: React.DragEvent<HTMLDivElement>) => {

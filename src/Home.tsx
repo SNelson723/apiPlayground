@@ -1,27 +1,12 @@
 import React from "react";
 import { useAppSelector, useAppDispatch } from "./hooks";
-import { addComponent } from "./features/appSlice";
-import type { ComponentId } from "./features/appSlice";
+import { addComponent, addTesting, type ComponentId } from "./features/appSlice";
 
 import WidgetContainer from "./components/WidgetContainer";
-import Button from "./components/Button";
-import Input from "./components/Input";
+import { componentMap } from "./components";
 
-// 1. Define a union type for component IDs
-// type ComponentId = "button" | "input";
-
-// 2. Define a type for the component mapping
-// type ComponentType = React.FC;
-
-// 3. Map component ids to their actual component for rendering in the drop zone
-const componentMap: Record<ComponentId, React.FC> = {
-  button: Button,
-  input: Input,
-};
-
-const Home: React.FC = () => {
-  // State to keep track of the ids of components dropped into the drop zone
-  // const [components, setComponents] = useState<ComponentId[]>([]);
+const Home = () => {
+  // redux state to keep track of the ids of components dropped into the drop zone
   const components = useAppSelector((state) => state.app.components);
   const dispatch = useAppDispatch();
 
