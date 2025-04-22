@@ -3,12 +3,12 @@ import { ComponentId } from "../features/appSlice";
 import Button from "./Button";
 import Input from "./Input";
 
-export interface PositionProps extends HTMLAttributes<HTMLDivElement> {
+export type PositionProps = {
   top: number;
   left: number;
-  width: number;
-  height: number;
-}
+  onDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDragStart?: (e: React.DragEvent<HTMLDivElement>) => void;
+} & HTMLAttributes<HTMLDivElement>;
 
 export const componentMap: Record<ComponentId, React.FC<PositionProps>> = {
   button: Button,

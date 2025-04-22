@@ -1,22 +1,18 @@
-import React from "react";
+import { PositionProps } from ".";
 
-export interface PositionProps {
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-}
-
-const Input: React.FC<PositionProps> = ({ top, left, width, height }) => {
+const Input = ({ top, left, onDrop, onDragStart }: PositionProps) => {
   return (
     <div
       style={{
         position: "absolute",
         top,
         left,
-        width,
-        height,
       }}
+      draggable="true"
+      onDrop={onDrop}
+      onDragStart={onDragStart}
+      onDragOver={(e) => e.preventDefault()}
+      className="select-none"
     >
       <label className="text-xl font-bold">Input</label>
       <input

@@ -1,24 +1,24 @@
-import React from "react";
+import { PositionProps } from ".";
 
-export interface PositionProps {
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-}
-
-const Button: React.FC<PositionProps> = ({ top, left, width, height }) => (
-  <button
-    style={{
-      position: "absolute",
-      top,
-      left,
-      width,
-      height,
-    }}
+const Button = ({ top, left, onDrop, onDragStart }: PositionProps) => (
+  <div
+    className="select-none"
+    draggable="true"
+    onDrop={onDrop}
+    onDragStart={onDragStart}
+    onDragOver={(e) => e.preventDefault()}
   >
-    Button
-  </button>
+    <button
+      style={{
+        position: "absolute",
+        top,
+        left,
+      }}
+      className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+    >
+      Button
+    </button>
+  </div>
 );
 
 export default Button;

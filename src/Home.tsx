@@ -1,45 +1,56 @@
 import React from "react";
 import { useAppSelector, useAppDispatch } from "./hooks";
 import {
-  addComponent,
   addTesting,
-  Testing,
+  updateTesting,
+  type Testing,
   type ComponentId,
 } from "./features/appSlice";
 
+// Import the WidgetContainer component, which contains the draggable components.
 import WidgetContainer from "./components/WidgetContainer";
 import { componentMap } from "./components";
 
 const Home = () => {
-  // redux state to keep track of the ids of components dropped into the drop zone
   const components = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
 
-  // Allow dropping by preventing default drag-over behavior
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
-  // On drop, read the component id and add it to the dropped components state
+  // Handle dropping either a new component or moving an existing one
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const { clientX, clientY } = e;
-    const dropZone = e.currentTarget.getBoundingClientRect();
-    console.log(clientX, clientY, dropZone);
+
+    // this is the UID of an existing component being moved => could be null if a new one is being created
+    const draggedUid = e.dataTransfer.getData("uid");
+
+    // grab the type of component being dragged from the widget container
     const type = e.dataTransfer.getData("componentType") as ComponentId;
-    if (componentMap[type]) {
+
+    // if dragging an existing component => update its position
+    if (draggedUid) {
+      dispatch(updateTesting({ uid: draggedUid, top: clientY, left: clientX }));
+    } else if (type && componentMap[type]) {
+      // else, create one in the drop zone
       const test: Testing = {
         id: type,
         top: clientY,
         left: clientX,
-        width: dropZone.width,
-        height: dropZone.height,
+        // unique ID for this new component => can be improved
+        uid: Date.now().toString() + Math.random(),
       };
       dispatch(addTesting(test));
-      console.log("Dropped component type:", type);
-      dispatch(addComponent(type));
     }
   };
+
+  // for existing components in the dashboard
+  const handleDragStart =
+    (uid: string) => (e: React.DragEvent<HTMLDivElement>) => {
+      e.dataTransfer.setData("uid", uid); // stores the unique ID of the component being dragged.
+    };
 
   return (
     <div
@@ -58,8 +69,8 @@ const Home = () => {
               key={idx}
               top={test.top}
               left={test.left}
-              width={test.width}
-              height={test.height}
+              onDrop={handleDrop}
+              onDragStart={handleDragStart(test.uid)}
             />
           ) : null;
         })}

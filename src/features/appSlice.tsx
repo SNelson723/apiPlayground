@@ -3,22 +3,19 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // can expand this to include more widget types in the future
 export type ComponentId = "button" | "input";
 
+// These fields can be used to save to the database and queried later
 export type Testing = {
   id: ComponentId;
-  // component: React.FC;
   top: number;
   left: number;
-  width: number;
-  height: number;
+  uid: string;
 }
 
 export interface AppState {
-  components: ComponentId[];
   testing: Testing[];
 }
 
 const initialState: AppState = {
-  components: [],
   testing: [],
 };
 
@@ -26,14 +23,21 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    addComponent: (state, action: PayloadAction<ComponentId>) => {
-      state.components.push(action.payload);
-    },
     addTesting: (state, action: PayloadAction<Testing>) => {
       state.testing.push(action.payload);
-    }
+    },
+    updateTesting: (
+      state,
+      action: PayloadAction<{ uid: string; top: number; left: number }>
+    ) => {
+      const { uid, top, left } = action.payload;
+      const index = state.testing.findIndex((test) => test.uid === uid);
+      if (index !== -1) {
+        state.testing[index] = { ...state.testing[index], top, left };
+      }
+    },
   },
 });
 
-export const { addComponent, addTesting } = appSlice.actions;
+export const { addTesting, updateTesting } = appSlice.actions;
 export default appSlice.reducer;
